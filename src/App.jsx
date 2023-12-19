@@ -30,6 +30,7 @@ const App = () => {
   }
   const handleClick = async () => {
     try {
+      setIsLoading(true)
       const response = await fetch(url)
       const data = await response.json()
       if (!response.ok) throw Error('There is an error')
