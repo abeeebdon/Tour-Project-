@@ -8,7 +8,6 @@ const App = () => {
   const [tours, setTours] = useState()
   const [isLoading, setIsLoading] = useState(true)
   const [isError, setIsError] = useState(false)
-  const [toggle, setToggle] = useState(false)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,6 +28,18 @@ const App = () => {
     const newTour = tours.filter((tour) => tour.id !== id)
     setTours(newTour)
   }
+  const handleClick = async () => {
+    try {
+      const response = await fetch(url)
+      const data = await response.json()
+      if (!response.ok) throw Error('There is an error')
+      setTours(data)
+      setIsLoading(false)
+    } catch (error) {
+      console.log(error)
+      setIsError(true)
+    }
+  }
 
   return (
     <main>
@@ -44,6 +55,7 @@ const App = () => {
               tours={tours}
               setTours={setTours}
               handleDelete={handleDelete}
+              handleClick={handleClick}
             />
           </div>
         </div>
